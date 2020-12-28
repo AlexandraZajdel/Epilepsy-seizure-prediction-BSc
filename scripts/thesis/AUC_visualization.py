@@ -7,7 +7,6 @@ import seaborn as sns
 
 sns.set_style('darkgrid')
 
-
 def plot_ROC(fpr=None, tpr=None):
     plt.figure()
     lw = 2

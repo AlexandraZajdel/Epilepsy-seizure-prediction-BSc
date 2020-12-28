@@ -7,15 +7,13 @@ class Configuration:
         'results_dir': '../../results',
     }
 
-
     signal_params = {
         'sampling_freq': 400,
         'invalid_value': 0.033691406
     }
 
-
     preprocessor = {
-        'corruption_threshold': 1.0,
+        'corruption_threshold': 0.9,
         'brain_activ_bands': {
             'delta': (0.1, 4),
             'theta': (4, 8),
@@ -30,15 +28,6 @@ class Configuration:
             'time_frame': 30,
             'metric': 'mean',
             'overlap_viz': 0,                                                       # overlap only for visualization purposes 
-        },
-        'wavelet_transform': {
-            'wavelet_type': 'db4',
-        },
-        'wavelet_scattering': {
-            'T': 10*60*400,
-            'J': 8,
-            'Q': 12,
-            'log_eps': 1e-6,
         },
     }
 
@@ -69,8 +58,7 @@ class Configuration:
             'dropout': 0.4,                                            
             'dense_units': 64,                                                   
         },
-        'XGB': {
-            'n_estimators': 100,
-            'max_depth': 3,
+        'KNN': {
+            'n_neighbors': 39,
         }
     }

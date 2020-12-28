@@ -89,9 +89,7 @@ def run_workflow(logger=None, is_optim_mode=False):
     if is_optim_mode:
         params = run_optimization(run_classifier, X_train, y_train)
     else:
-        params = {
-            'n_neighbors': 16,
-        }
+        params = CONFIG.models['KNN']
 
     model = run_classifier(params, X_train, y_train)
     score_train = make_prediction(model, X_train, y_train_original, 

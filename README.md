@@ -25,25 +25,39 @@ Data is credited to Melbourne University and can be accessed via website https:/
     └── thesis          # generating plots for dissertation
 ```
 
-## Setup (TO CHANGE!)
-Project configuration settings are stored in [config_dir/config.py](config_dir/config.py).
-
-
-1. Install requirements via:
-
+## Installation
+The code was written in Python 3. Use the package manager **pip** to install requirements:
 ```bash
 pip install -r requirements.txt
 ```
-2. Find corrupted files by running **scripts/EDA/corruption_detect.py**
 
-3. Preprocess raw data and train selected model. 
-- Train CNN model by running:
+## Usage  
+Project configuration settings are stored in [config_dir/config.py](config_dir/config.py).
 
+1. Find corrupted files:
 ```bash
-cd scripts/models
-python CNN_train.py
+cd scripts/EDA
+python3 corruption_detect.py --cfg config_dir.config
+```
+
+2. Preprocess raw data and classify. 
+- preprocess data:
+```bash
+cd scripts/preprocessors
+python3 preprocess_to_specgram.py --cfg config_dir.config
 ``` 
 
+- Train CNN model:
+```bash
+cd scripts/models
+python3 CNN_train.py --cfg config_dir.config
+``` 
+
+- Run KNN classificator:
+```bash
+cd scripts/models
+python KNN_train.py --cfg config_dir.config
+``` 
 
 
 ## Author

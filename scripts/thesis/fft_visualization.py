@@ -1,4 +1,6 @@
 ''' 
+Fast Fourier Transform visualization
+
 Based on the code:
 Taspinar, A (2018) Machine Learning with Signal Processing techniques 
 [Source code] http://ataspinar.com/2018/04/04/machine-learning-with-signal-processing-techniques/
@@ -20,7 +22,6 @@ def get_fft_values(y_values, T, N):
     fft_values_ = fft(y_values)
     fft_values = 2.0 / N * np.abs(fft_values_[0:N // 2])
     return f_values, fft_values
-
 
 def generate_3D_plot(x_values, y_values, f_values, fft_values,
                      composite_y_value, frequencies):

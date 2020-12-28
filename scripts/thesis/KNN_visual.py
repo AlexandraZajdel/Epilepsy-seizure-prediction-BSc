@@ -1,3 +1,7 @@
+'''
+K-nearest neighbors classification and elbow method visualization.
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
@@ -8,13 +12,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.decomposition import PCA
 
 plt.style.use('seaborn')
-
-# font = {
-#     'family': 'monospace',
-#     'size': 30
-# }
-# plt.rc('font', **font)
-
 
 def generate_dataset():
     X, y = make_classification(n_samples=2000, n_features=20, n_redundant=8, 
@@ -108,7 +105,6 @@ def optim_K(X_train, X_test, y_train, y_test):
     plt.ylabel('error rate')
     fig.tight_layout()
     plt.show()
-
 
 if __name__ == '__main__':
     K_NEIGHBORS = 15
