@@ -1,0 +1,9 @@
+data/processed/*
+!data/processed/.gitkeep
+!data/raw/.gitkeep
+data/raw/*
+__pycache__
+.env
+results/
+materials/
+additional_analysis/
