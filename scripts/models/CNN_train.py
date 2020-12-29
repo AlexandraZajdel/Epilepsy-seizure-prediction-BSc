@@ -1,9 +1,9 @@
 
-""" Data classification using binned spectrograms and Convolutional Neural Network. 
+''' Data classification using binned spectrograms and Convolutional Neural Network. 
 
 Run script as follows:
 python CNN_train.py --cfg 'config_dir.<config_name>'
-"""
+'''
 
 import sys
 from glob import glob
@@ -59,7 +59,11 @@ def standardize_data_per_channel(data, axis=0):
     return arr
 
 def run_workflow(logger=None, is_optim_mode=True):
-    """ Prepare data for training and run model. """
+    ''' Prepare data for training and run model. 
+    
+    
+    
+    '''
 
     train_in, train_out, test_in, test_out = get_inputs_and_outputs(
         CONFIG,
@@ -86,14 +90,14 @@ def run_workflow(logger=None, is_optim_mode=True):
     if logger is not None:
         time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logger.info(
-            f"""\n{time}
+            f'''\n{time}
                 \nPreprocessed data loaded. 
                 Train num. examples, num. channels, num. frequency bins, num. timesteps: {X_train.shape}
                 Val num. examples: {X_val.shape[0]}
                 Test num. examples: {X_test.shape[0]}
                 \nTraining mode: {CONFIG.training_settings['mode']}
                 \nParameters spectrogram: 
-                {CONFIG.preprocessor['spectrogram']}"""
+                {CONFIG.preprocessor['spectrogram']}'''
         )
 
     # apply scaler ( fit and transform on train data; transform validation and test sets )
@@ -105,7 +109,6 @@ def run_workflow(logger=None, is_optim_mode=True):
     X_train, X_val, X_test = [
         np.moveaxis(data, 1, 3) for data in [X_train, X_val, X_test]
     ]
-
 
     if is_optim_mode:
         params = run_optimization(run_model, X_train, y_train, X_val, y_val)

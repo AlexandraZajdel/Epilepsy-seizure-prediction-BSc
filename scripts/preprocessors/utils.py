@@ -1,4 +1,5 @@
-""" Raw data loader. """
+''' This script contains functions of general utility used in various places 
+throughout preprocessing scripts. '''
 
 import glob
 import os
@@ -12,6 +13,8 @@ from scipy.io import loadmat
 
 
 def get_command_line_arg(script_descr):
+    ''' Get configuration file parth from command line. '''
+
     parser = argparse.ArgumentParser(description=script_descr)
     required_arg = parser.add_argument_group("required arguments")
     required_arg.add_argument(
@@ -22,6 +25,8 @@ def get_command_line_arg(script_descr):
 
 
 def load_config(script_descr):
+    ''' Load configuration file. '''
+
     args = get_command_line_arg(script_descr)
     config_path = args.cfg
     # dynamically load configuration file
@@ -31,22 +36,22 @@ def load_config(script_descr):
 
 
 def load_mat_file(path):
-    """Load .mat file and return numpy array with shape
-    (NUM_SAMPLES, NUM_CHANNELS)."""
+    ''' Load .mat file and return numpy array with shape
+    (NUM_SAMPLES, NUM_CHANNELS).'''
 
     mat_data = loadmat(path)
     return mat_data["data"]
 
 
 def array_to_dataframe_converter(data):
-    """ Convert numpy array to pandas dataframe. """
+    ''' Convert numpy array to pandas dataframe. '''
 
     df = pd.DataFrame(data=data)
     return df
 
 
 def run_preprocessor(config, preprocess_function, is_parallel=True):
-    """ Run preprocess function on the whole dataset. """
+    ''' Run preprocess function on the whole dataset. '''
 
     data_dir = config.paths["raw_data_dir"]
     mode = config.training_settings["mode"]

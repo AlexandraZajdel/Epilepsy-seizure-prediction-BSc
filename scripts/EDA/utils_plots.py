@@ -17,6 +17,8 @@ def time_domain_plot(time, signal, channel_num, type):
 
 def time_domain_subplots(config, data_pair, time_stop=None):
     '''
+    Generate time plots for preictal and interictal data.
+
     Args:
         data_pair (tuple): Tuple of Pandas Dataframes with 
                             preictal and interictal data correspondingly
@@ -49,6 +51,8 @@ def time_domain_subplots(config, data_pair, time_stop=None):
 
 
 def spectrogram_plot(config, data, channel_num, type, is_log=True):
+    
+
     freq_min, freq_max = 1, 100
     sample_freqs, segment_times, spect_values = signal.spectrogram(
         data,
@@ -71,6 +75,8 @@ def spectrogram_plot(config, data, channel_num, type, is_log=True):
 
 def time_freq_comparison_plots(config, data_pair, time_stop=None):
     '''
+    Generate time plots and spectrograms for preictal and interictal data. 
+
     Args:
         data_pair (tuple): Tuple of Pandas Dataframes with 
                             preictal and interictal data correspondingly
@@ -113,10 +119,13 @@ def time_freq_comparison_plots(config, data_pair, time_stop=None):
 
 def correlation_plot(dataframe, title):
     '''
+    Plot correlation between channels.
+
     Args:
         dataframe (pd.DataFrame): Data for 1 patient.
         title (str): Title of the plot.
     '''
+
     plt.figure(figsize=(10, 8))
     sns.heatmap(dataframe.corr(), vmin=-1, vmax=1, cmap='RdBu')
     plt.title(title)

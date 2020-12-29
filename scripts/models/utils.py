@@ -1,5 +1,5 @@
-""" This script contains functions of general utility used in various places 
-throughout models scripts. """
+''' This script contains functions of general utility used in various places 
+throughout models scripts. '''
 
 import os
 from glob import glob
@@ -12,6 +12,8 @@ from sklearn.model_selection import train_test_split
 
 
 def get_command_line_arg(script_descr):
+    ''' Get configuration file parth from command line. '''
+
     parser = argparse.ArgumentParser(description=script_descr)
     required_arg = parser.add_argument_group("required arguments")
     required_arg.add_argument(
@@ -22,6 +24,8 @@ def get_command_line_arg(script_descr):
 
 
 def load_config(script_descr):
+    ''' Load configuration file. '''
+
     args = get_command_line_arg(script_descr)
     config_path = args.cfg
     # dynamically load configuration file
@@ -51,7 +55,7 @@ def get_class_from_labels_file(config, filepath):
 
 
 def get_inputs_and_outputs(config, foldername, load_func, format, mode="all"):
-    """ Load data for training: inputs and outputs. """
+    ''' Load data for training: inputs and outputs. '''
 
     get_data_file_names = lambda folder_type : glob(
             os.path.join(
@@ -88,21 +92,21 @@ def get_inputs_and_outputs(config, foldername, load_func, format, mode="all"):
 
 
 def load_npy_data(path):
-    """ Load preprocessed data from .npy format. """
+    ''' Load preprocessed data from .npy format. '''
 
     data = np.load(path)
     return data
 
 
 def load_csv_data(path):
-    """ Load preprocessed data from .csv format. """
+    ''' Load preprocessed data from .csv format. '''
 
     data = pd.read_csv(path, header=0, index_col=0)
     return data
 
 
 def split_data(config, X, y):
-    """ Split data into train and validation sets according to provided ratio. """
+    ''' Split data into train and validation sets according to provided ratio. '''
 
     val_ratio = config.training_settings["data_split"]["val_ratio"]
 

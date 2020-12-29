@@ -33,6 +33,5 @@ def plot_ROC(fpr=None, tpr=None):
     plt.legend(loc="lower right")
     plt.show()
 
-
 if __name__ == '__main__':
     plot_ROC()

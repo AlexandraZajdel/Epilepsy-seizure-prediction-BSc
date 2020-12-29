@@ -17,11 +17,13 @@ from scripts.preprocessors.utils import (load_mat_file, load_config)
 plt.style.use('seaborn')
 
 def compute_histogram_data(data_paths):
+    ''' Compute the histogram data for every single file and average them. '''
+
     # same bins range for all files 
     bins = np.arange(-200, 200, step=2)  
     hist_buffer = []
 
-    for path in data_paths[:5]:
+    for path in data_paths:
         try:
             data = load_mat_file(path)
             hist, bin_edges = np.histogram(data, bins=bins, density=True)
@@ -50,7 +52,7 @@ def smooth_data(data):
     return np.convolve(data, np.ones(5)/5, mode='same')
 
 def plot_distribution(bin_edges, hist_train, hist_test):
-    ''' Plot distribution comparison. '''
+    ''' Plot distribution comparison between train and test data. '''
 
     hist_train = smooth_data(hist_train)
     hist_test = smooth_data(hist_test)
@@ -71,6 +73,8 @@ def plot_distribution(bin_edges, hist_train, hist_test):
                 bbox_inches='tight')
 
 def run_workflow(config):
+    ''' Run analysis on the whole dataset or for specific patient. '''
+
     get_data_file_names = lambda folder_type : glob(
             os.path.join(
                 config.paths["raw_data_dir"],

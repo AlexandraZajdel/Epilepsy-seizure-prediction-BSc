@@ -4,7 +4,6 @@ import scipy
 def remove_DC_component(data):
     return data - data.mean()
 
-
 def compute_fft(signal, sampling_freq):
     '''
     Compute Fast Fourier Transform for one channel.
