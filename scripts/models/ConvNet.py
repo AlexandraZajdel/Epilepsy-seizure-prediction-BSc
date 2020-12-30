@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import (
+    Input,
     Dense,
     Dropout,
     Flatten,
@@ -23,6 +24,7 @@ class ConvNet(object):
 
     def define_sequential_model(self):
         model = Sequential()
+        model.add(Input(shape=self.input_CNN_shape, name='Input'))
         model.add(
             Conv2D(
                 filters=self.cfg["nfilters_conv1"],
@@ -33,11 +35,11 @@ class ConvNet(object):
                 kernel_initializer="he_uniform",
                 kernel_regularizer=tf.keras.regularizers.l2(self.cfg["l2_reg"]),
                 data_format="channels_last",
-                input_shape=self.input_CNN_shape,
+                name='Conv1'
             )
         )
 
-        model.add(BatchNormalization())
+        model.add(BatchNormalization(name='BatchNorm1'))
 
         model.add(
             Conv2D(
@@ -48,33 +50,37 @@ class ConvNet(object):
                 strides=(self.cfg["stride_conv2"], self.cfg["stride_conv2"]),
                 kernel_initializer="he_uniform",
                 kernel_regularizer=tf.keras.regularizers.l2(self.cfg["l2_reg"]),
+                name='Conv2'
             )
         )
         model.add(
             MaxPooling2D(
-                pool_size=(self.cfg["poolsize_conv2"], self.cfg["poolsize_conv2"]),
-                strides=(self.cfg["poolstride_conv2"], self.cfg["poolstride_conv2"]),
-                padding="same"
+                pool_size=(self.cfg["poolsize"], self.cfg["poolsize"]),
+                strides=(self.cfg["poolstride"], self.cfg["poolstride"]),
+                padding="same",
+                name='Maxpooling'
             )
         )
-        model.add(BatchNormalization())
+        model.add(BatchNormalization(name='BatchNorm2'))
 
-        model.add(Flatten())
+        model.add(Flatten(name='Flatten'))
         model.add(
             Dense(
                 units=self.cfg["dense_units"],
                 activation="relu",
                 kernel_initializer="he_uniform",
+                name='Dense1'
             )
         )
-        model.add(BatchNormalization())
-        model.add(Dropout(rate=self.cfg["dropout"]))
+        model.add(BatchNormalization(name='BatchNorm3'))
+        model.add(Dropout(rate=self.cfg["dropout"], name='Dropout'))
 
         model.add(
             Dense(
                 units=self.n_classes,
                 activation="sigmoid",
                 kernel_initializer="glorot_uniform",
+                name='Dense2'
             )
         )
 
