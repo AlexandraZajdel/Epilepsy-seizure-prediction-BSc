@@ -105,4 +105,8 @@ def run_preprocessor(config, preprocess_function, is_parallel=True):
     else:
         # serial function calling
         for path in tqdm(file_paths):
-            preprocess_function(path)
+            try: 
+                preprocess_function(path)
+            except OSError:
+                print(f'Could not read bytes from file: {path}')
+                continue

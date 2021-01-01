@@ -116,8 +116,10 @@ def preprocess_file(filepath, is_plot=False):
     # save preprocessed files
     new_filename = os.path.basename(filepath).replace('.mat', '.npy')
     subject_name = filepath.split(os.path.sep)[-2]
+    time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
+    metric = CONFIG.preprocessor['spectrogram']['metric']
     new_file_dir = os.path.join(CONFIG.paths['processed_data_dir'], 
-                                'binned_specgram',
+                                f'binned_specgram_timeframe_{time_frame}_metric_{metric}',
                                 subject_name)
 
     if not os.path.exists(new_file_dir):

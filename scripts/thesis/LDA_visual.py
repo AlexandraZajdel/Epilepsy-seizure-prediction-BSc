@@ -86,13 +86,19 @@ def plot_distributions(data_train, data_test):
 def run_workflow():
     """ Prepare data for visualization. """
 
+    time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
+    metric = CONFIG.preprocessor['spectrogram']['metric']
+
     train_in, _, test_in, _ = get_inputs_and_outputs(
         CONFIG,
-        "binned_specgram",
+        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
         load_npy_data,
         ".npy",
         mode=MODE,
     )
+
+    print('Preprocessed data loaded from directory: ' +
+    f'binned_specgram_timeframe_{time_frame}_metric_{metric}')
 
     X_train, X_test = np.array(train_in), np.array(test_in)
 

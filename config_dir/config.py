@@ -26,7 +26,7 @@ class Configuration:
         'high_cut': 180,
         'spectrogram': {
             'time_frame': 30,
-            'metric': 'mean',
+            'metric': 'std',
             'overlap_viz': 0,                                                       # overlap only for visualization purposes 
         },
     }
@@ -54,9 +54,11 @@ class Configuration:
             'poolsize': 3,
             'poolstride': 1,
             'dropout': 0.4,                                            
-            'dense_units': 128,                                                   
+            'dense_units': 128,   
+            'optim_mode': False,                                                
         },
         'KNN': {
             'n_neighbors': 39,
+            'optim_mode': False, 
         }
     }

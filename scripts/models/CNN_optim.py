@@ -20,10 +20,8 @@ def run_optimization(get_model_func, X_train, y_train, X_val, y_val):
         'kernel_size_2': hp.choice('kernel_size_2', [3]),
         'stride_conv1': hp.choice('stride_conv1', [1]),
         'stride_conv2': hp.choice('stride_conv2', [1]),
-        'poolsize_conv1': hp.choice('poolsize_conv1', [2]),
-        'poolsize_conv2': hp.choice('poolsize_conv2', [2]),
-        'poolstride_conv1': hp.choice('poolstride_conv1', [2]),
-        'poolstride_conv2': hp.choice('poolstride_conv2', [2]),
+        'poolsize': hp.choice('poolsize_conv1', [2]),
+        'poolstride': hp.choice('poolstride_conv1', [2]),
         'dropout': hp.uniform('dropout', 0.0, 0.8),                                            
         'dense_units': hp.choice('dense_units', [64, 128, 256]), 
     }
@@ -37,9 +35,12 @@ def run_optimization(get_model_func, X_train, y_train, X_val, y_val):
                 'status': STATUS_OK, 'model': model, 'history': model.history}
 
     trials = Trials()
-    best_params = fmin(func_to_minimize, search_space,
+    best_params = fmin(func_to_minimize, 
+                        search_space,
                         algo=tpe.suggest, 
                         max_evals=2,
                         trials=trials,
                         return_argmin=False)
+    
+    # return best params based on cross-validation score
     return best_params

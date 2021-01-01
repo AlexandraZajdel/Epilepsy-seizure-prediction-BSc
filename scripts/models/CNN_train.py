@@ -45,7 +45,6 @@ def get_scores(model, X_test, y_test):
     return (train_score, val_score, test_score)
 
 def standardize_data_per_channel(data, axis=0):
-    # TO DO: REFACTOR IT 
     buffer = []
     for img in data:
         # calculate per-channel means and standard deviations
@@ -59,15 +58,14 @@ def standardize_data_per_channel(data, axis=0):
     return arr
 
 def run_workflow(logger=None, is_optim_mode=True):
-    ''' Prepare data for training and run model. 
-    
-    
-    
-    '''
+    ''' Prepare data for training and run model. '''
+
+    time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
+    metric = CONFIG.preprocessor['spectrogram']['metric']
 
     train_in, train_out, test_in, test_out = get_inputs_and_outputs(
         CONFIG,
-        "binned_specgram",
+        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
         load_npy_data,
         ".npy",
         mode=CONFIG.training_settings["mode"],
@@ -91,13 +89,13 @@ def run_workflow(logger=None, is_optim_mode=True):
         time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logger.info(
             f'''\n{time}
-                \nPreprocessed data loaded. 
+                \nPreprocessed data loaded.
+                Parameters spectrogram: 
+                {CONFIG.preprocessor['spectrogram']}
                 Train num. examples, num. channels, num. frequency bins, num. timesteps: {X_train.shape}
                 Val num. examples: {X_val.shape[0]}
                 Test num. examples: {X_test.shape[0]}
-                \nTraining mode: {CONFIG.training_settings['mode']}
-                \nParameters spectrogram: 
-                {CONFIG.preprocessor['spectrogram']}'''
+                \nTraining mode: {CONFIG.training_settings['mode']}'''
         )
 
     # apply scaler ( fit and transform on train data; transform validation and test sets )
@@ -147,5 +145,5 @@ if __name__ == "__main__":
     )
     logger.setLevel(logging.INFO)
 
-    mean_score = run_workflow(logger, is_optim_mode=False)
+    run_workflow(logger, is_optim_mode=CONFIG.models['CNN']['optim_mode'])
 

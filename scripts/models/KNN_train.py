@@ -49,9 +49,12 @@ def make_prediction(model, X, y, n_examples, n_time_frames):
 def run_workflow(logger=None, is_optim_mode=False):
     """ Prepare data for training and run model. """
 
+    time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
+    metric = CONFIG.preprocessor['spectrogram']['metric']
+
     train_in, train_out, test_in, test_out = get_inputs_and_outputs(
         CONFIG,
-        "binned_specgram",
+        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
         load_npy_data,
         ".npy",
         mode=CONFIG.training_settings["mode"],
@@ -77,6 +80,8 @@ def run_workflow(logger=None, is_optim_mode=False):
         logger.info(
             f"""\n{time}
                 \nPreprocessed data loaded. 
+                Parameters spectrogram: 
+                {CONFIG.preprocessor['spectrogram']}
                 Train num. examples x num. timesteps, num. channels x num. frequency bins: {X_train.shape}
                 Test num. examples x num. timesteps: {X_test.shape[0]}
                 \nTraining mode: {CONFIG.training_settings['mode']}"""
@@ -114,4 +119,4 @@ if __name__ == "__main__":
     )
     logger.setLevel(logging.INFO)
 
-    run_workflow(logger, is_optim_mode=True)
+    run_workflow(logger, is_optim_mode=CONFIG.models['KNN']['optim_mode'])

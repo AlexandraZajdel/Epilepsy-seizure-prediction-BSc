@@ -2,14 +2,10 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 plt.style.use('seaborn')
-
-font = {
-    'family': 'monospace',
-    'size': 30
-}
-plt.rc('font', **font)
+sns.set(font_scale=1.5)  
 
 def generate_data():
     np.random.seed(seed=42)
@@ -40,9 +36,8 @@ def generate_plot(x, y):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend(loc='upper left')
-    plt.tight_layout()
+    plt.tight_layout(pad=0)
     plt.show()
-
 
 if __name__ == '__main__':
     x, y = generate_data()

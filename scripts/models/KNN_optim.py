@@ -5,17 +5,16 @@ import logging
 
 import numpy as np
 from sklearn.model_selection import cross_val_score
-from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
-
+from hyperopt import fmin, tpe, hp, STATUS_OK, Trials, space_eval
 
 logging.getLogger('hyperopt.tpe').setLevel(logging.ERROR)
 
 def run_optimization(get_clasifier_func, X_train, y_train):
     ''' Run parameters optimization using hyperopt library. '''
 
-    # define the search space over hyperparameters 
+    # define the search space over hyperparameters (only odd number of neighbors) 
     search_space = {
-        'n_neighbors': hp.choice('n_neighbors', range(10,100)),
+        'n_neighbors': hp.choice('n_neighbors', np.arange(9, 99, 2)),
     }
 
     def func_to_minimize(params):
@@ -32,9 +31,8 @@ def run_optimization(get_clasifier_func, X_train, y_train):
                        search_space, 
                        algo=tpe.suggest, 
                        max_evals=10, 
-                       trials=trials)
+                       trials=trials,
+                       return_argmin=False)
 
-    all_results_list = trials.trials
-    for d in all_results_list:
-        print(d['misc']['vals'], d['result']['loss'])
+    # return best params based on cross-validation score
     return best_params
