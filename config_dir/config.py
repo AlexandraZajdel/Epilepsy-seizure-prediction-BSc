@@ -26,7 +26,7 @@ class Configuration:
         'high_cut': 180,
         'spectrogram': {
             'time_frame': 30,
-            'metric': 'std',
+            'metric': 'mean',
             'overlap_viz': 0,                                                       # overlap only for visualization purposes 
         },
     }
@@ -35,7 +35,7 @@ class Configuration:
         'data_split': {
             'val_ratio': 0.2
         },
-        'mode': 'all'
+        'mode': 'Pat2'
     }
 
     models = {
@@ -55,10 +55,12 @@ class Configuration:
             'poolstride': 1,
             'dropout': 0.4,                                            
             'dense_units': 128,   
-            'optim_mode': False,                                                
+            'optim_mode': True,                                                
         },
         'KNN': {
-            'n_neighbors': 39,
+            'params': {
+                'n_neighbors': 39,
+            },
             'optim_mode': False, 
         }
     }

@@ -129,4 +129,4 @@ def preprocess_file(filepath, is_plot=False):
 
 if __name__ == '__main__':
     CONFIG = load_config(script_descr='Preprocess raw data to spectrograms.')
-    run_preprocessor(CONFIG, preprocess_file, False)
+    run_preprocessor(CONFIG, preprocess_file, True)

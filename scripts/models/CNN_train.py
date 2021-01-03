@@ -109,7 +109,7 @@ def run_workflow(logger=None, is_optim_mode=True):
     ]
 
     if is_optim_mode:
-        params = run_optimization(run_model, X_train, y_train, X_val, y_val)
+        params = run_optimization(run_model, X_train, y_train, X_val, y_val, X_test, y_test)
     else:
         params = CONFIG.models['CNN']
 
