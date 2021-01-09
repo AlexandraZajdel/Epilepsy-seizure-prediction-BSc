@@ -10,7 +10,7 @@ from hyperopt import fmin, tpe, hp, STATUS_OK, Trials, space_eval
 logging.getLogger('hyperopt.tpe').setLevel(logging.ERROR)
 
 def run_optimization(get_clasifier_func, X_train, y_train):
-    ''' Run parameters optimization using hyperopt library. '''
+    ''' Run K parameter optimization using hyperopt library. '''
 
     # define the search space over hyperparameters (only odd number of neighbors) 
     search_space = {
@@ -18,6 +18,8 @@ def run_optimization(get_clasifier_func, X_train, y_train):
     }
 
     def func_to_minimize(params):
+        ''' Objective function.'''
+        
         classifier = get_clasifier_func(params, X_train, y_train)
         auc = cross_val_score(classifier, X_train, y_train, 
                               scoring='roc_auc', cv=3, n_jobs=-1).mean()

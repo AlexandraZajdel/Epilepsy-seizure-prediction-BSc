@@ -1,8 +1,9 @@
-""" Data classification using binned spectrograms and K-nearest neighbours. 
+''' Data classification using binned spectrograms and K-nearest neighbors. 
 
 Run script as follows:
 python KNN_train.py --cfg 'config_dir.<config_name>'
-"""
+'''
+
 import sys
 from glob import glob
 import os
@@ -32,6 +33,8 @@ def run_classifier(params, X_train, y_train):
     return clf
 
 def calc_AUC(y, pred):
+    ''' Calculate area under the curve metric. '''
+
     fpr, tpr, _ = metrics.roc_curve(y, pred, pos_label=1)
     out = metrics.auc(fpr, tpr)
     return out
@@ -47,17 +50,17 @@ def make_prediction(model, X, y, n_examples, n_time_frames):
     return score
 
 def run_workflow(logger=None, is_optim_mode=False):
-    """ Prepare data for training and run model. """
+    ''' Prepare data for training and run model. '''
 
     time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
     metric = CONFIG.preprocessor['spectrogram']['metric']
 
     train_in, train_out, test_in, test_out = get_inputs_and_outputs(
         CONFIG,
-        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
+        f'binned_specgram_timeframe_{time_frame}_metric_{metric}',
         load_npy_data,
-        ".npy",
-        mode=CONFIG.training_settings["mode"],
+        '.npy',
+        mode=CONFIG.training_settings['mode'],
     )
 
     X_train, y_train, X_test, y_test = [np.array(data) for data in 
@@ -76,15 +79,15 @@ def run_workflow(logger=None, is_optim_mode=False):
     X_test, y_test = reshape_spectr_data_to_2D(X_test, y_test)
 
     if logger is not None:
-        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         logger.info(
-            f"""\n{time}
+            f'''\n{time}
                 \nPreprocessed data loaded. 
                 Parameters spectrogram: 
                 {CONFIG.preprocessor['spectrogram']}
                 Train num. examples x num. timesteps, num. channels x num. frequency bins: {X_train.shape}
                 Test num. examples x num. timesteps: {X_test.shape[0]}
-                \nTraining mode: {CONFIG.training_settings['mode']}"""
+                \nTraining mode: {CONFIG.training_settings['mode']}'''
         )
 
     scaler = StandardScaler()
@@ -103,18 +106,18 @@ def run_workflow(logger=None, is_optim_mode=False):
                                 n_test_examples, n_time_frames)
 
     if logger is not None:
-        logger.info(f"Params: {params}" +
-                    f"\n{time}: Mean AUC score is: train: {score_train:.2f} "+
+        logger.info(f'Params: {params}' +
+                    f'\n{time}: Mean AUC score is: train: {score_train:.2f} '+
                     f"test: {score_test:.2f}\n{'>'*80}")
     return score_test
 
 
-if __name__ == "__main__":
-    CONFIG = load_config(script_descr="KNN training using customized configuration.")
+if __name__ == '__main__':
+    CONFIG = load_config(script_descr='KNN training using customized configuration.')
 
     logger = logging.getLogger(__name__)
     logging.basicConfig(
-        filename=os.path.join(CONFIG.paths["results_dir"], "KNN_model_logs.txt"),
+        filename=os.path.join(CONFIG.paths['results_dir'], 'KNN_model_logs.txt'),
         level=logging.INFO,
     )
     logger.setLevel(logging.INFO)

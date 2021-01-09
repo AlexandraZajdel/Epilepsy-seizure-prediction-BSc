@@ -4,9 +4,12 @@ from sklearn.preprocessing import StandardScaler
 def scale_across_time(x, x_test=None, scalers=None):
     ''' Standardize data across time. 
 
-    TO DO: change code!
+    Based on the script: 
+    Korshunova, I (2014) data_scaler
+    [Source code] https://github.com/IraKorshunova/kaggle-seizure-prediction/blob/master/utils/data_scaler.py
+    Licence: MIT
 
-    flatten the spectrogram into a vector of 60 values, and from each value 
+    Flatten the spectrogram into a vector and from each value 
     substract the mean and divide by standard deviation calculated 
     over the complete train dataset.
     '''

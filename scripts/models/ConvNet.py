@@ -12,9 +12,7 @@ from tensorflow.keras.layers import (
 )
 
 class ConvNet(object):
-    '''
-    A class to represent a convolutional neural network.
-    '''
+    '''A class to represent a convolutional neural network.'''
 
     def __init__(self, params, n_classes, input_data_shape):
         self.cfg = params

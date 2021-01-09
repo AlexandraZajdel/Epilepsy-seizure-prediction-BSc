@@ -13,7 +13,7 @@ class Configuration:
     }
 
     preprocessor = {
-        'corruption_threshold': 0.9,
+        'corruption_threshold': 0.8,
         'brain_activ_bands': {
             'delta': (0.1, 4),
             'theta': (4, 8),
@@ -35,7 +35,7 @@ class Configuration:
         'data_split': {
             'val_ratio': 0.2
         },
-        'mode': 'Pat2'
+        'mode': 'Pat1'
     }
 
     models = {
@@ -43,19 +43,19 @@ class Configuration:
             'epochs': 100,
             'max_iterations': 1,
             'batch_size': 8,
-            'learning_rate': 0.001,
+            'learning_rate': 0.0001,
             'l2_reg': 0.1,
-            'nfilters_conv1': 16,
-            'nfilters_conv2': 16,                                                  
+            'nfilters_conv1': 8,
+            'nfilters_conv2': 8,                                                  
             'kernel_size_1': 3,
             'kernel_size_2': 3, 
             'stride_conv1': 1,
             'stride_conv2': 1,
-            'poolsize': 3,
-            'poolstride': 1,
-            'dropout': 0.4,                                            
-            'dense_units': 128,   
-            'optim_mode': True,                                                
+            'poolsize': 2,
+            'poolstride': 2,
+            'dropout': 0.8,                                            
+            'dense_units': 64,   
+            'optim_mode': False,                                                
         },
         'KNN': {
             'params': {

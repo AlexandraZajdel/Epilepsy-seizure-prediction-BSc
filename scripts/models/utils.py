@@ -1,5 +1,4 @@
-''' This script contains functions of general utility used in various places 
-throughout models scripts. '''
+''' Utility functions for models scripts. '''
 
 import os
 from glob import glob
@@ -15,9 +14,9 @@ def get_command_line_arg(script_descr):
     ''' Get configuration file parth from command line. '''
 
     parser = argparse.ArgumentParser(description=script_descr)
-    required_arg = parser.add_argument_group("required arguments")
+    required_arg = parser.add_argument_group('required arguments')
     required_arg.add_argument(
-        "--cfg", required=True, type=str, help="configuration module name"
+        '--cfg', required=True, type=str, help='configuration module name'
     )
     args = parser.parse_args()
     return args
@@ -29,7 +28,7 @@ def load_config(script_descr):
     args = get_command_line_arg(script_descr)
     config_path = args.cfg
     # dynamically load configuration file
-    module = importlib.import_module(config_path, "../../")
+    module = importlib.import_module(config_path, '../../')
     config = module.Configuration()
     return config
 
@@ -37,7 +36,7 @@ def get_class_from_labels_file(config, filepath):
     ''' Load label from file. '''
 
     basename = os.path.basename(filepath)
-    filename = basename.split(".")[0]
+    filename = basename.split('.')[0]
 
     if 'Train' in filename:
         # extract label from filename
@@ -54,23 +53,23 @@ def get_class_from_labels_file(config, filepath):
     return class_num
 
 
-def get_inputs_and_outputs(config, foldername, load_func, format, mode="all"):
+def get_inputs_and_outputs(config, foldername, load_func, format, mode='all'):
     ''' Load data for training: inputs and outputs. '''
 
     get_data_file_names = lambda folder_type : glob(
             os.path.join(
-                config.paths["processed_data_dir"],
+                config.paths['processed_data_dir'],
                 str(foldername),
                 folder_type,
-                "*" + str(format),
+                '*' + str(format),
             )
         )
 
-    if mode == "all":
+    if mode == 'all':
         train_files = get_data_file_names('*Train')
         test_files = get_data_file_names('*Test')
 
-    elif mode in ["Pat1", "Pat2", "Pat3"]:
+    elif mode in ['Pat1', 'Pat2', 'Pat3']:
         train_files = get_data_file_names(mode + '*Train')
         test_files = get_data_file_names(mode + '*Test')
     else:
@@ -108,7 +107,7 @@ def load_csv_data(path):
 def split_data(config, X, y):
     ''' Split data into train and validation sets according to provided ratio. '''
 
-    val_ratio = config.training_settings["data_split"]["val_ratio"]
+    val_ratio = config.training_settings['data_split']['val_ratio']
 
     X_train, X_val, y_train, y_val = train_test_split(
         X, y, test_size=val_ratio, shuffle=True, random_state=42

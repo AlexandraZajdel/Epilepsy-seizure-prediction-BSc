@@ -1,3 +1,5 @@
+'''Utility funcions for data visualization.'''
+
 import matplotlib.pyplot as plt
 from scipy import signal
 import numpy as np
@@ -16,8 +18,7 @@ def time_domain_plot(time, signal, channel_num, type):
     plt.ylabel(r'Voltage [$\mu$V] ')
 
 def time_domain_subplots(config, data_pair, time_stop=None):
-    '''
-    Generate time plots for preictal and interictal data.
+    '''Generate time plots for preictal and interictal data.
 
     Args:
         data_pair (tuple): Tuple of Pandas Dataframes with 
@@ -51,7 +52,7 @@ def time_domain_subplots(config, data_pair, time_stop=None):
 
 
 def spectrogram_plot(config, data, channel_num, type, is_log=True):
-    
+    '''Generate spectrograms for preictal and interictal data.'''
 
     freq_min, freq_max = 1, 100
     sample_freqs, segment_times, spect_values = signal.spectrogram(
@@ -74,8 +75,7 @@ def spectrogram_plot(config, data, channel_num, type, is_log=True):
 
 
 def time_freq_comparison_plots(config, data_pair, time_stop=None):
-    '''
-    Generate time plots and spectrograms for preictal and interictal data. 
+    '''Generate time plots and spectrograms for preictal and interictal data. 
 
     Args:
         data_pair (tuple): Tuple of Pandas Dataframes with 
@@ -118,8 +118,7 @@ def time_freq_comparison_plots(config, data_pair, time_stop=None):
 
 
 def correlation_plot(dataframe, title):
-    '''
-    Plot correlation between channels.
+    '''Plot correlation between channels.
 
     Args:
         dataframe (pd.DataFrame): Data for 1 patient.

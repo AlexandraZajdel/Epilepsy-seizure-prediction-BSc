@@ -40,9 +40,8 @@ def plot_explained_var(n_components, pca):
     plt.xlabel('Principal component index')
     plt.ylabel('Explained variance ratio')
     plt.legend(loc='lower right')
-    plt.savefig(os.path.join(CONFIG.paths['results_dir'], 'plots', 
-                f'tSNE_explained_variance_{MODE}.png'), bbox_inches='tight')
-
+    plt.show()
+    
 def create_embeddings(data, target, plot_variance=False):
     ''' Apply PCA and LDA '''
 

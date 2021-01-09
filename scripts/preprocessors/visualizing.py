@@ -1,7 +1,8 @@
+'''Utility funcions for data visualization using MNE library.'''
+
 from mne.viz import plot_raw_psd
 import mne 
 import matplotlib.pyplot as plt
-
 
 def create_rawarray(config, data):
     ''' Create Raw Array MNE object for visualization purposes. '''

@@ -1,3 +1,5 @@
+'''Utility functions for data transformations.'''
+
 import numpy as np
 import scipy
 

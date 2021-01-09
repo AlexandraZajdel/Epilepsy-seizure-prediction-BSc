@@ -27,7 +27,7 @@ from scripts.models.utils import (
     load_config
 )
 
-tf.get_logger().setLevel("ERROR")
+tf.get_logger().setLevel('ERROR')
 
 def run_model(params, X_train, y_train, X_val, y_val, 
             is_summary=False, log_dir=None):
@@ -44,19 +44,6 @@ def get_scores(model, X_test, y_test):
     test_score = model.evaluate_model(X_test, y_test)
     return (train_score, val_score, test_score)
 
-def standardize_data_per_channel(data, axis=0):
-    buffer = []
-    for img in data:
-        # calculate per-channel means and standard deviations
-        means = img.mean(axis=(0,1), dtype='float64')
-        stds = img.std(axis=(0,1), dtype='float64')
-        # per channels standarization of pixels
-        img = (img-means) / stds
-        buffer.append(img)
-
-    arr = np.array(buffer)
-    return arr
-
 def run_workflow(logger=None, is_optim_mode=True):
     ''' Prepare data for training and run model. '''
 
@@ -65,17 +52,17 @@ def run_workflow(logger=None, is_optim_mode=True):
 
     train_in, train_out, test_in, test_out = get_inputs_and_outputs(
         CONFIG,
-        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
+        f'binned_specgram_timeframe_{time_frame}_metric_{metric}',
         load_npy_data,
-        ".npy",
-        mode=CONFIG.training_settings["mode"],
+        '.npy',
+        mode=CONFIG.training_settings['mode'],
     )
 
     log_dir = os.path.join(
-            CONFIG.paths["results_dir"],
-            "logs",
-            "CNN",
-            datetime.datetime.now().strftime("%Y%m%d-%H%M%S"),
+            CONFIG.paths['results_dir'],
+            'logs',
+            'CNN',
+            datetime.datetime.now().strftime('%Y%m%d-%H%M%S'),
     )
 
     # separate validation data from training data
@@ -86,7 +73,7 @@ def run_workflow(logger=None, is_optim_mode=True):
     del (train_in, train_out, test_in, test_out) # free memory 
 
     if logger is not None:
-        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         logger.info(
             f'''\n{time}
                 \nPreprocessed data loaded.
@@ -109,7 +96,8 @@ def run_workflow(logger=None, is_optim_mode=True):
     ]
 
     if is_optim_mode:
-        params = run_optimization(run_model, X_train, y_train, X_val, y_val, X_test, y_test)
+        params = run_optimization(run_model, X_train, y_train, 
+                                  X_val, y_val, X_test, y_test)
     else:
         params = CONFIG.models['CNN']
 
@@ -118,7 +106,7 @@ def run_workflow(logger=None, is_optim_mode=True):
 
     # run training multiple times because of non-determinism
     score_list = []
-    for _ in range(CONFIG.models["CNN"]["max_iterations"]):
+    for _ in range(CONFIG.models['CNN']['max_iterations']):
         model = run_model(params, X_train, y_train, X_val, y_val, log_dir=log_dir)
         score_list.append(get_scores(model, X_test, y_test))
 
@@ -128,19 +116,19 @@ def run_workflow(logger=None, is_optim_mode=True):
     mean_score_test = np.mean(scores_test)
 
     if logger is not None:
-        logger.info(f"\n{time}: Mean AUC score is: train: {mean_score_train:.2f} "+
-                    f"val: {mean_score_val:.2f} " +
+        logger.info(f'\n{time}: Mean AUC score is: train: {mean_score_train:.2f} '+
+                    f'val: {mean_score_val:.2f} ' +
                     f"test: {mean_score_test:.2f}\n{'>'*80}")
 
     return mean_score_test
 
 
-if __name__ == "__main__":
-    CONFIG = load_config(script_descr="CNN training using customized configuration.")
+if __name__ == '__main__':
+    CONFIG = load_config(script_descr='CNN training using customized configuration.')
 
     logger = logging.getLogger(__name__)
     logging.basicConfig(
-        filename=os.path.join(CONFIG.paths["results_dir"], "CNN_model_logs.txt"),
+        filename=os.path.join(CONFIG.paths['results_dir'], 'CNN_model_logs.txt'),
         level=logging.INFO,
     )
     logger.setLevel(logging.INFO)

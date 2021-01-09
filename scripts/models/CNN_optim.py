@@ -1,5 +1,5 @@
 ''' Function for optimization of Convolutional Neural Network 
-using hyperopt library. '''
+using Hyperopt library. '''
 
 import logging
 
@@ -15,6 +15,8 @@ def get_scores(model, X_test, y_test):
     return (train_score, val_score, test_score)
 
 def run_optimization(get_model_func, X_train, y_train, X_val, y_val, X_test, y_test):
+    ''' Run hyperparameters optimization using hyperopt library. '''
+
     search_space = {
         'epochs': hp.choice('epochs', [100]), 
         'batch_size': hp.choice('batch_size', [8, 16]),
@@ -33,6 +35,8 @@ def run_optimization(get_model_func, X_train, y_train, X_val, y_val, X_test, y_t
     }
 
     def func_to_minimize(params):
+        '''Objective function.'''
+
         max_iterations = 10
         score_list = []
 
@@ -48,7 +52,7 @@ def run_optimization(get_model_func, X_train, y_train, X_val, y_val, X_test, y_t
 
         print(params)
         print(mean_score_train, mean_score_val, mean_score_test)
-        # minimize the inverted test AUC score
+        # save the inverted test AUC score
         return {'loss': -mean_score_test, 'status': STATUS_OK}
 
     trials = Trials()

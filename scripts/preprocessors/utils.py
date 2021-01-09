@@ -1,5 +1,4 @@
-''' This script contains functions of general utility used in various places 
-throughout preprocessing scripts. '''
+'''Utility functions for preprocessing scripts.'''
 
 import glob
 import os
@@ -13,12 +12,12 @@ from scipy.io import loadmat
 
 
 def get_command_line_arg(script_descr):
-    ''' Get configuration file parth from command line. '''
+    ''' Get configuration file path from command line. '''
 
     parser = argparse.ArgumentParser(description=script_descr)
-    required_arg = parser.add_argument_group("required arguments")
+    required_arg = parser.add_argument_group('required arguments')
     required_arg.add_argument(
-        "--cfg", required=True, type=str, help="configuration module name"
+        '--cfg', required=True, type=str, help='configuration module name'
     )
     args = parser.parse_args()
     return args
@@ -30,7 +29,7 @@ def load_config(script_descr):
     args = get_command_line_arg(script_descr)
     config_path = args.cfg
     # dynamically load configuration file
-    module = importlib.import_module(config_path, "../../")
+    module = importlib.import_module(config_path, '../../')
     config = module.Configuration()
     return config
 
@@ -40,7 +39,7 @@ def load_mat_file(path):
     (NUM_SAMPLES, NUM_CHANNELS).'''
 
     mat_data = loadmat(path)
-    return mat_data["data"]
+    return mat_data['data']
 
 
 def array_to_dataframe_converter(data):
@@ -50,20 +49,20 @@ def array_to_dataframe_converter(data):
     return df
 
 
-def run_preprocessor(config, preprocess_function, is_parallel=True):
+def run_preprocessor(config, preprocess_function, is_parallel=False):
     ''' Run preprocess function on the whole dataset. '''
 
-    data_dir = config.paths["raw_data_dir"]
-    mode = config.training_settings["mode"]
+    data_dir = config.paths['raw_data_dir']
+    mode = config.training_settings['mode']
 
-    if mode == "all":
-        file_paths = glob.glob(os.path.join(data_dir, "*", "*.mat"))
-    elif mode in ["Pat1", "Pat2", "Pat3"]:
+    if mode == 'all':
+        file_paths = glob.glob(os.path.join(data_dir, '*', '*.mat'))
+    elif mode in ['Pat1', 'Pat2', 'Pat3']:
         file_paths = glob.glob(
             os.path.join(
                 data_dir,
-                mode + "*",
-                "*.mat",
+                mode + '*',
+                '*.mat',
             )
         )
     else:
@@ -75,7 +74,7 @@ def run_preprocessor(config, preprocess_function, is_parallel=True):
     get_file_list = lambda filefolder, filename : [
         line.strip()
         for line in open(
-            os.path.join(config.paths[filefolder], filename), "r"
+            os.path.join(config.paths[filefolder], filename), 'r'
         )
     ]
 
@@ -90,13 +89,13 @@ def run_preprocessor(config, preprocess_function, is_parallel=True):
     # filter test files: only in public test
     file_paths_test = [path for path in file_paths if 
                         (('Test' in os.path.basename(path)) 
-                        & (os.path.basename(path).split(".")[0] in public_test_list))]   
+                        & (os.path.basename(path).split('.')[0] in public_test_list))]   
 
     # join file paths
     file_paths = [*file_paths_train, *file_paths_test]
 
-    if not os.path.exists(config.paths["processed_data_dir"]):
-        os.makedirs(config.paths["processed_data_dir"])
+    if not os.path.exists(config.paths['processed_data_dir']):
+        os.makedirs(config.paths['processed_data_dir'])
 
     if is_parallel:
         # run function in parallel

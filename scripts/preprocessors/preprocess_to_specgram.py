@@ -1,8 +1,8 @@
-""" Data preprocessing using FFT and generating binned spectrograms. 
+'''Data preprocessing using FFT and generating binned spectrograms . 
 
 Run script as follows:
 python preprocess_to_specgram.py --cfg 'config_dir.<config_name>'
-"""
+'''
 
 import os
 import sys
@@ -23,7 +23,8 @@ def apply_bandpass_filter(data, order=5):
     low = CONFIG.preprocessor['low_cut'] / nyquist_freq
     high = CONFIG.preprocessor['high_cut'] / nyquist_freq
     numerator, denominator = butter(order, [low, high], btype='band')
-    filtered_data = lfilter(numerator, denominator, data, axis=0) # axis=0: filter down each column 
+    # axis=0 in lfilter: filter down each column
+    filtered_data = lfilter(numerator, denominator, data, axis=0)  
     return np.float32(filtered_data)
 
 
@@ -129,4 +130,4 @@ def preprocess_file(filepath, is_plot=False):
 
 if __name__ == '__main__':
     CONFIG = load_config(script_descr='Preprocess raw data to spectrograms.')
-    run_preprocessor(CONFIG, preprocess_file, True)
+    run_preprocessor(CONFIG, preprocess_file, False)
