@@ -1,5 +1,4 @@
-''' 
-Fast Fourier Transform visualization
+'''Fast Fourier Transform visualization (Figure 2.1).
 
 Based on the code:
 Taspinar, A (2018) Machine Learning with Signal Processing techniques 
@@ -32,9 +31,9 @@ def generate_3D_plot(x_values, y_values, f_values, fft_values,
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
-    ax.set_xlabel("\nTime [s]", fontsize=16)
-    ax.set_ylabel("\nFrequency [Hz]", fontsize=16)
-    ax.set_zlabel("\nAmplitude", fontsize=16)
+    ax.set_xlabel('\nTime [s]', fontsize=16)
+    ax.set_ylabel('\nFrequency [Hz]', fontsize=16)
+    ax.set_zlabel('\nAmplitude', fontsize=16)
 
     y_values_list = [composite_y_value] + list(reversed(y_values))
     frequencies = [0] + list(reversed(frequencies))

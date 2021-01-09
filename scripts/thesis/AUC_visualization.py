@@ -1,4 +1,4 @@
-''' Generate examples of ROC curves. '''
+'''Generate examples of ROC curves (Figure 4.1).'''
 
 from sklearn import metrics
 import numpy as np
@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 sns.set_style('darkgrid')
+sns.set(font_scale=1.3)  
 
 def plot_ROC(fpr=None, tpr=None):
-    plt.figure()
+    plt.figure(figsize=(9,7), dpi=600)
     lw = 2
     # perfect ROC
     plt.plot([0, 0, 1], [0, 1, 1],
@@ -29,8 +30,8 @@ def plot_ROC(fpr=None, tpr=None):
     plt.ylim([-0.05, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
-    plt.legend(loc="lower right")
+    plt.legend(loc='lower right')
+    plt.tight_layout()
     plt.show()
 
 if __name__ == '__main__':

@@ -1,14 +1,18 @@
+'''Generate heatmaps for better visualization of KNN results (Figure 4.8).'''
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
-sns.set(font="Times New Roman", font_scale=1.5)
-plt.rcParams["font.family"] = "Times New Roman"
+sns.set(font='Times New Roman', font_scale=1.5)
+plt.rcParams['font.family'] = 'Times New Roman'
 
+# load CSV data with saved results
 data = pd.read_csv('../../results/KNN_results/KNN_all_results.csv', 
                    header=0, 
                    index_col=0)
 
+# generate heatmap based on values
 plt.figure(figsize=(9,3))
 ax = sns.heatmap(data, annot=True, cbar=False, cmap='Reds')
 ax.xaxis.tick_top() # x axis on top

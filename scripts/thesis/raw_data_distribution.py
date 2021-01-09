@@ -1,5 +1,5 @@
-''' Illustrate distribution differences between 
-raw training data and raw test data. 
+'''Illustrate distribution differences between 
+raw training data and raw test data. (Figures: 4.4, A.1)
 '''
 
 import os
@@ -77,17 +77,17 @@ def run_workflow(config):
 
     get_data_file_names = lambda folder_type : glob(
             os.path.join(
-                config.paths["raw_data_dir"],
+                config.paths['raw_data_dir'],
                 folder_type,
-                "*.mat"
+                '*.mat'
             )
         )
 
-    if MODE == "all":
+    if MODE == 'all':
         train_files = get_data_file_names('*Train')
         test_files = get_data_file_names('*Test')
 
-    elif MODE in ["Pat1", "Pat2", "Pat3"]:
+    elif MODE in ['Pat1', 'Pat2', 'Pat3']:
         train_files = get_data_file_names(MODE + '*Train')
         test_files = get_data_file_names(MODE + '*Test')
     else:

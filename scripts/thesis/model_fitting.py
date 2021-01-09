@@ -1,4 +1,6 @@
-''' Illustrate underfitting, overfitting and good fitting on synthetic data. '''
+'''Illustrate underfitting, overfitting and good fitting on synthetic data. 
+(Figure 2.10)
+'''
 
 import numpy as np
 import matplotlib.pyplot as plt

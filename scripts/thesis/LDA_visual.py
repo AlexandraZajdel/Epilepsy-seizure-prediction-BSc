@@ -1,8 +1,10 @@
-""" Data visualization using Linear Discriminant Analysis (LDA).  
+'''Data visualization using Linear Discriminant Analysis (LDA) 
+(Figures: 4.6, 4.7, A.3.). 
+Generate distribution plots for processed data (Figures 4.5 and A.2.)
 
 Run script as follows:
 python LDA_visual.py --cfg 'config_dir.<config_name>'
-"""
+'''
 
 import sys
 import os
@@ -76,24 +78,24 @@ def plot_distributions(data_train, data_test):
 
     plt.figure(figsize=(9,7), dpi=600)
     sns.distplot(data_train, hist=False, label='train', color='r', 
-                kde_kws={"shade": True})
+                kde_kws={'shade': True})
     sns.distplot(data_test, hist=False, label='test', color='b', 
-                kde_kws={"shade": True})
+                kde_kws={'shade': True})
     plt.legend(loc='upper left')
     plt.xlabel('Value')
     plt.ylabel('Density')
 
 def run_workflow():
-    """ Prepare data for visualization. """
+    ''' Prepare data for visualization. '''
 
     time_frame = CONFIG.preprocessor['spectrogram']['time_frame']
     metric = CONFIG.preprocessor['spectrogram']['metric']
 
     train_in, _, test_in, _ = get_inputs_and_outputs(
         CONFIG,
-        f"binned_specgram_timeframe_{time_frame}_metric_{metric}",
+        f'binned_specgram_timeframe_{time_frame}_metric_{metric}',
         load_npy_data,
-        ".npy",
+        '.npy',
         mode=MODE,
     )
 
@@ -124,7 +126,7 @@ def run_workflow():
     visualize_data_LDA_1D(X_visual, colors, markers_type, markers_size)
 
 
-if __name__ == "__main__":
-    CONFIG = load_config(script_descr="tSNE visualization.")
-    MODE = CONFIG.training_settings["mode"]
+if __name__ == '__main__':
+    CONFIG = load_config(script_descr='tSNE visualization.')
+    MODE = CONFIG.training_settings['mode']
     run_workflow()

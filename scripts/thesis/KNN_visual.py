@@ -1,5 +1,5 @@
-'''
-K-nearest neighbors classification and elbow method visualization.
+'''K-nearest neighbors classification and elbow method visualization. 
+(Figure 2.4 and 2.5).
 '''
 
 import numpy as np
@@ -15,7 +15,7 @@ plt.style.use('seaborn')
 
 def generate_dataset():
     X, y = make_classification(n_samples=2000, n_features=20, n_redundant=8, 
-                                n_informative=5,
+                                n_informative=4,
                                 n_clusters_per_class=1, n_classes=2)    
     X = StandardScaler().fit_transform(X)
     pca = PCA(n_components=2)
@@ -66,16 +66,16 @@ def plot_decision_boundary(ax, X_train, X_test, y_train, y_test, xx, yy):
     # Put the result into a color plot
     Z = Z.reshape(xx.shape)
 
-    cm = plt.cm.RdBu
-    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+    cm_bright = ListedColormap(['#99ccff', '#ff9999'])
+    cm_dark = ListedColormap(['#FF0000', '#0000FF'])
 
-    ax.contourf(xx, yy, Z, cmap=cm, alpha=.8)
+    ax.contourf(xx, yy, Z, cmap=cm_bright, alpha=.8)
 
     # Plot the training points
-    ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright,
+    ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_dark,
                 edgecolors='k')
     # Plot the testing points
-    ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright,
+    ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_dark,
                 edgecolors='k', alpha=0.6)
 
     ax.set_xlim(xx.min(), xx.max())
