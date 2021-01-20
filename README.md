@@ -2,7 +2,7 @@
 
 This repository contains all the content related to my <b>Bachelor's Degree Final Project</b> at <i>AGH University of Science and Technology. </i>
 The dissertation with a comprehensive description of used methods can be found 
-[There will be a link to thesis in MISIO] (...). 
+[here](https://misio.fis.agh.edu.pl/media/misiofiles/8bca5a7fb32fc56aba98a469880af108.pdf). 
 
 ## Overview
 The aim of the project is to predict epileptic seizure based on iEEG signal using classical Machine Learning as well as Deep Learning techniques.
